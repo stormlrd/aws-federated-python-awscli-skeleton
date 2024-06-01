@@ -1,13 +1,12 @@
 """
-name: skeleton-python-template.py
-ver: 1.00
-author: Paul Dunlop + AI
-purpose:
-Primary use case for this script is making python use the aws cli for API calls, not the boto3 library... 
-why? why not! this is one way to skin a cat eh.
-
-note: requires external tool called aws-federated-headless-login which is a go app using rod for headless browser automation
+name    : skeleton-python-template.py
+ver     : 0.02
+author  : Paul Dunlop + AI
+purpose :Primary use case for this script is making python use the aws cli for API calls, not the boto3 library... 
+        why? why not! this is one way to skin a cat eh.
+note    : requires external tool called aws-federated-headless-login which is a go app using rod for headless browser automation
 """
+version="0.02" # used in console output
 
 # Set up imports
 import configparser
@@ -15,10 +14,26 @@ import os
 import sys
 import subprocess
 from pathlib import Path
+# for clear() import only system from os 
+from os import system, name 
 
-# Path to the AWS CLI Config
-aws_config_file = Path.home() / '.aws' / 'config'
-print ("Using config file located: ",aws_config_file)
+
+###################################
+# FUNCTIONS
+###################################
+#----------------------------------
+# Function: clear()
+# Purpose: clears the screen
+# Arguments: None
+#----------------------------------
+def clear(): 
+    # for windows 
+    if name == 'nt': 
+        _ = system('cls') 
+  
+    # for mac and linux(here, os.name is 'posix') 
+    else: 
+        _ = system('clear') 
 
 # read in the aws config file storing only profile name and account id for later lookups if needed
 def read_aws_config(file_path):
@@ -108,6 +123,20 @@ def login_to_profiles(profiles_dict):
 #########################################################
 #### MAIN CODE
 #########################################################
+clear()
+
+# print banner
+print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+print("skeleton-python-template v", version)
+print("Author: Paul Dunlop")
+print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+print("Happy scripting! ... ")
+print("")
+
+# Path to the AWS CLI Config
+aws_config_file = Path.home() / '.aws' / 'config'
+print ("Using config file located: ",aws_config_file)
+
 # read in the profiles
 profiles = read_aws_config(aws_config_file)
 
