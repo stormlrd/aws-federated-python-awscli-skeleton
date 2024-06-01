@@ -6,7 +6,7 @@ purpose:
 Primary use case for this script is making python use the aws cli for API calls, not the boto3 library... 
 why? why not! this is one way to skin a cat eh.
 
-note: requires external tool called headless-sso which is a go app using rod for headless browser automation
+note: requires external tool called aws-federated-headless-login which is a go app using rod for headless browser automation
 """
 
 # Set up imports
@@ -61,7 +61,7 @@ def lookup_profile_by_account_id(profiles_dict, account_id):
             return profile_name
     return "Profile not found for the given account ID."
 
-# logs into all profiles using headless browser automation via external app called headless-sso made with go using rod for browser automation
+# logs into all profiles using headless browser automation via external app called aws-federated-headless-login made with go using rod for browser automation
 def login_to_profiles(profiles_dict):
     sso_cache_path = os.path.expanduser('~/.aws/sso/cache/')
 
@@ -88,15 +88,15 @@ def login_to_profiles(profiles_dict):
                 # Construct the AWS SSO login command
                 aws_sso_login_command = ["aws", "sso", "login", "--profile", profile_name, "--no-browser"]
                 
-                # Construct the headless-sso command with the appropriate show parameter
-                headless_sso_command = ["./headless-sso", f"-show={show_param}"]
+                # Construct the aws-federated-headless-login command with the appropriate show parameter
+                headless_sso_command = ["./aws-federated-headless-login", f"-show={show_param}"]
                 
-                # Check if the headless-sso file exists
-                if not os.path.exists("./headless-sso"):
-                    print("Error: headless-sso script does not exist. Fatal issue! exiting...")
+                # Check if the aws-federated-headless-login file exists
+                if not os.path.exists("./aws-federated-headless-login"):
+                    print("Error: aws-federated-headless-login script does not exist. Fatal issue! exiting...")
                     sys.exit(1)
                 
-                # Run the AWS SSO login command and pipe the output to the headless-sso command
+                # Run the AWS SSO login command and pipe the output to the aws-federated-headless-login command
                 aws_sso_login_process = subprocess.Popen(aws_sso_login_command, stdout=subprocess.PIPE)
                 subprocess.run(headless_sso_command, stdin=aws_sso_login_process.stdout)
                 aws_sso_login_process.stdout.close()

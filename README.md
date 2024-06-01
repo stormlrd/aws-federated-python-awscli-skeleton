@@ -7,7 +7,7 @@
 ||why? why not! this is one way to skin a cat eh.|
 
 # pre-reqs:
-**NOTE:** Requires external tool called headless-sso which is a go app using rod for headless browser automation
+**NOTE:** Requires external tool called aws-federated-headless-login which is a go app using rod for headless browser automation found here https://github.com/stormlrd/aws-federated-headless-login. this repo comes with a precompiled version in it.
 
 you must have installed:
 - awscli
@@ -26,7 +26,8 @@ output = json
 ```
 
 # usage:
-copy the template and name it something else as you'll want to re-use this as your baseline
+ensure you have set up your aws cli config properly. i have another script that can help scrape identity center profiles found here: https://github.com/stormlrd/aws-sso-cli-config-creator
+
+copy the template & the aws-federated-headless-login executable somewhere else and rename the python script something else..
 
 python3 ./newnameofyourscript.py to run the script
-
